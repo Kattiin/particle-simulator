@@ -1,6 +1,10 @@
 import math
 
+# All code related to vectors and particles
+
 # Task (2/12): Define a class Vec
+class Vec:
+    def __init__ (self, x, y):
 
 # Task (3/12): Additionally define a function dot(u, v)
 
