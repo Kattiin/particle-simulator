@@ -81,3 +81,10 @@ class Particle:
 ### When you're done with all 12 tasks: ###
 ### forces/other features in this file! ###
 ###########################################
+
+def constant_gravitational_field(dt,particles,g=10):
+    
+    d=Vec(0,-1) #vektorn som går nedåt
+    for p in particles:
+        f=(g*p.mass)*d #f=g*m*d
+        p.apply_force(dt,f) #dt=tidsstegslängd
