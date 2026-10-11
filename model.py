@@ -68,15 +68,6 @@ class Particle:
 ### NB. Tasks 7–8 are done in view.py. ###
 ##########################################
 
-
-
-
-
-
-
-
-
-
 ###########################################
 ### When you're done with all 12 tasks: ###
 ### forces/other features in this file! ###
@@ -84,7 +75,34 @@ class Particle:
 
 def constant_gravitational_field(dt,particles,g=10):
     
-    d=Vec(0,-1) #vektorn som går nedåt
+    d = Vec(0,-1) # vector down, gravity
     for p in particles:
-        f=(g*p.mass)*d #f=g*m*d
-        p.apply_force(dt,f) #dt=tidsstegslängd
+        f = ( g * p.mass) * d # f = g * m * d
+        p.apply_force(dt,f) # dt = delta time
+
+###########################################
+
+def wall_force(dt, particles, k, n, a):
+
+    for p in particles:
+        d = dot(p.position - a, n)  # calculates distance to wall
+
+        if d < 0:
+            f = (-k * d) * n  # calculates current force vector according to distance to wall
+            p.apply_force(dt, f)
+
+
+def circular_arena(dt, particles, k, R):
+
+    # R = radius of arena
+    # r = distance of the particle to the origin
+    # k = spring constant of wall
+
+    for p in particles:
+        r = p.position.norm()  # calculates the length of a particle's position vector
+
+        if r > R:
+            f = (k * (R - r) / r) * p.position  # calculates current force vector according to distance to wall
+            p.apply_force(dt, f)
+    
+
