@@ -18,11 +18,6 @@ def to_canvas_coords(canvas, u):
 
     return Vec(x,y)                     # returns the canvas coordinates
 
-
-#######################################
-### NB. Task 9 is done in model.py. ###
-#######################################
-
 # Task (10/12): Define a new function move_oval_to(o, u1, u2)
 def move_oval_to(canvas, o, u1, u2):    # this function moves the oval o to a specific bounding box, given by two vectors u1 and u2.
     
@@ -46,7 +41,7 @@ def simulation_loop(f, timestep, particles):
         ovals.append(create_oval(canvas, particle))
 
     canvas.update()
-    last_update = time.time()
+    last_update = time.perf_counter()
 
     while True:
         time.sleep(0.01)
@@ -56,13 +51,34 @@ def simulation_loop(f, timestep, particles):
         for particle in particles:                       # update the particle positions
             particle.inertial_move(timestep)
 
-        current_time = time.time()
+        current_time = time.perf_counter()
 
         if current_time - last_update >= 1/30:           # updating the display only when necessary
 
-            for particle, oval in zip(particles, ovals):
-                u1, u2 = particle.bounding_box()
-                move_oval_to(canvas, oval, u1, u2)
+            try:
+                for particle, oval in zip(particles, ovals):
+                    u1, u2 = particle.bounding_box()
+                    move_oval_to(canvas, oval, u1, u2)
 
-            canvas.update()
+                canvas.update()
+            except TclError:
+                break  
+
             last_update = current_time
+
+        if timestep >= 0.001:
+            time.sleep(timestep) 
+
+def walls(canvas, R):
+    top_left = Vec(-R, R)
+    bottom_right = Vec(R, -R)
+
+    u1 = to_canvas_coords(canvas, top_left)
+    u2 = to_canvas_coords(canvas, bottom_right)
+
+    canvas.create_oval(
+        u1.x, u1.y,
+        u2.x, u2.y,
+        outline="grey",
+        width=1
+    )
