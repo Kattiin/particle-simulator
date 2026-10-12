@@ -45,10 +45,13 @@ def simulation_loop(f, timestep, particles):
     for particle in particles:                          # one oval for each particle
         ovals.append(create_oval(canvas, particle))
 
+    canvas.update()
     last_update = time.time()
 
     while True:
-        f(timestep, particles)                           # apply forces
+        time.sleep(0.01)
+
+        f(timestep, particles)                          # apply forces
 
         for particle in particles:                       # update the particle positions
             particle.inertial_move(timestep)
