@@ -44,8 +44,7 @@ def simulation_loop(f, timestep, particles):
     last_update = time.perf_counter()
 
     while True:
-        time.sleep(0.01)
-
+        
         f(timestep, particles)                          # apply forces
 
         for particle in particles:                       # update the particle positions
