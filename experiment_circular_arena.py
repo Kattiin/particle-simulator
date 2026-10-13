@@ -2,6 +2,29 @@
 # This file showcases the feature "circular arena" - walls.
 # It uses the particle movement from experiment.inertial.py to showcase the walls function
 
+"""Experiment: Circular arena (Walls)
+
+This experiment demonstrates how particles behave inside a
+circular arena. The particles start in a circle and move
+towards the center.
+
+The particles move freely inside the arena, but when they cross the 
+boundary, a spring-like force pushes them back
+towards the center.
+
+Expected result:
+The particles should pass through the center and continue outwards
+until they reach the wall. The wall force should
+then slow them down and eventually push them back.
+
+The strength of this force depends on the spring constant k
+and how far the particles move outside the arena.
+
+When a particle moves beyond the wall, a force pushes it back towards 
+the center. The further it moves outside the boundary, the stronger 
+the force becomes.
+"""
+
 from view import *
 import math
 
